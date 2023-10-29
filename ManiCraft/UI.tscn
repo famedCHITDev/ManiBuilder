@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://c5e1bgeggxave"]
+
+[ext_resource type="Texture2D" uid="uid://4y1mg37ml34w" path="res://HUD/ItemBar.png" id="1_dflpk"]
+[ext_resource type="Script" path="res://UI.gd" id="1_tbnw6"]
+[ext_resource type="Texture2D" uid="uid://duq37xrrx0ghv" path="res://HUD/ItemSelect.png" id="2_s124n"]
+[ext_resource type="Texture2D" uid="uid://dtnjpwuqcl5nk" path="res://HUD/Pause.png" id="4_4pmvg"]
+[ext_resource type="Texture2D" uid="uid://djm2my024ktuy" path="res://HUD/Quit.png" id="5_0mxu7"]
+[ext_resource type="Texture2D" uid="uid://tnpregdwh31w" path="res://HUD/Inventory.png" id="6_fg4id"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihcro"]
+font_size = 20
+font_color = Color(0.196078, 0.196078, 0.196078, 1)
+outline_color = Color(0, 0, 0, 1)
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tbnw6")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Crosshair" type="Label" parent="HUD"]
+offset_right = 1152.0
+offset_bottom = 648.0
+text = "+"
+label_settings = SubResource("LabelSettings_ihcro")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemBar" type="TextureRect" parent="HUD"]
+offset_top = 575.0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_dflpk")
+stretch_mode = 5
+
+[node name="SelectTool" type="Node2D" parent="HUD"]
+position = Vector2(271, 575)
+
+[node name="ItemSelect" type="TextureRect" parent="HUD/SelectTool"]
+offset_right = 74.0
+offset_bottom = 73.0
+texture = ExtResource("2_s124n")
+stretch_mode = 5
+
+[node name="PauseMenu" type="Node2D" parent="HUD"]
+visible = false
+position = Vector2(576, 60)
+
+[node name="Pause" type="TextureRect" parent="HUD/PauseMenu"]
+offset_left = -366.0
+offset_right = 366.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+texture = ExtResource("4_4pmvg")
+stretch_mode = 5
+
+[node name="Quit" type="TextureRect" parent="HUD/PauseMenu"]
+offset_left = -315.0
+offset_top = 250.0
+offset_right = 315.0
+offset_bottom = 340.0
+texture = ExtResource("5_0mxu7")
+stretch_mode = 5
+
+[node name="Inventory" type="Node2D" parent="HUD"]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Inventory"]
+offset_top = 40.0
+offset_right = 1152.0
+offset_bottom = 552.0
+texture = ExtResource("6_fg4id")
+stretch_mode = 5

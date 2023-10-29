@@ -1,0 +1,126 @@
+[gd_scene load_steps=21 format=3 uid="uid://eruotadwxbl5"]
+
+[ext_resource type="Script" path="res://World.gd" id="1_lhnae"]
+[ext_resource type="PackedScene" uid="uid://dn2tjx02tywyx" path="res://Player.tscn" id="1_qjuvl"]
+[ext_resource type="Texture2D" uid="uid://cox4uglmdrsh2" path="res://blockTextures/atlases/blockAtlas.png" id="2_bwb1c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2deq4"]
+noise_type = 3
+
+[sub_resource type="VoxelGeneratorNoise2D" id="VoxelGeneratorNoise2D_2v5sq"]
+channel = 0
+height_start = 0.0
+height_range = 12.0
+noise = SubResource("FastNoiseLite_2deq4")
+
+[sub_resource type="VoxelBlockyModel" id="VoxelBlockyModel_skq26"]
+resource_name = "air"
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_yh4f8"]
+resource_name = "grass"
+tile_bottom = Vector2i(2, 0)
+tile_top = Vector2i(1, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_l056s"]
+resource_name = "log_up"
+tile_left = Vector2i(3, 0)
+tile_right = Vector2i(3, 0)
+tile_bottom = Vector2i(5, 0)
+tile_top = Vector2i(5, 0)
+tile_back = Vector2i(3, 0)
+tile_front = Vector2i(3, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_xhha2"]
+resource_name = "log_side1"
+tile_left = Vector2i(5, 0)
+tile_right = Vector2i(5, 0)
+tile_bottom = Vector2i(4, 0)
+tile_top = Vector2i(4, 0)
+tile_back = Vector2i(4, 0)
+tile_front = Vector2i(4, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_5p3ou"]
+resource_name = "log_side2"
+tile_left = Vector2i(4, 0)
+tile_right = Vector2i(4, 0)
+tile_bottom = Vector2i(3, 0)
+tile_top = Vector2i(3, 0)
+tile_back = Vector2i(5, 0)
+tile_front = Vector2i(5, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_f7fg2"]
+resource_name = "planks"
+tile_left = Vector2i(6, 0)
+tile_right = Vector2i(6, 0)
+tile_bottom = Vector2i(6, 0)
+tile_top = Vector2i(6, 0)
+tile_back = Vector2i(6, 0)
+tile_front = Vector2i(6, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_ynjnm"]
+resource_name = "crafting_table"
+tile_left = Vector2i(7, 0)
+tile_right = Vector2i(7, 0)
+tile_bottom = Vector2i(5, 0)
+tile_top = Vector2i(8, 0)
+tile_back = Vector2i(7, 0)
+tile_front = Vector2i(7, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_jfjxn"]
+resource_name = "note"
+tile_left = Vector2i(10, 0)
+tile_right = Vector2i(10, 0)
+tile_bottom = Vector2i(10, 0)
+tile_top = Vector2i(10, 0)
+tile_back = Vector2i(10, 0)
+tile_front = Vector2i(10, 0)
+
+[sub_resource type="VoxelBlockyModelCube" id="VoxelBlockyModelCube_vota0"]
+resource_name = "voteKick"
+tile_left = Vector2i(11, 0)
+tile_right = Vector2i(11, 0)
+tile_bottom = Vector2i(11, 0)
+tile_top = Vector2i(11, 0)
+tile_back = Vector2i(11, 0)
+tile_front = Vector2i(11, 0)
+
+[sub_resource type="VoxelBlockyLibrary" id="VoxelBlockyLibrary_0djfs"]
+models = Array[VoxelBlockyModel]([SubResource("VoxelBlockyModel_skq26"), SubResource("VoxelBlockyModelCube_yh4f8"), SubResource("VoxelBlockyModelCube_l056s"), SubResource("VoxelBlockyModelCube_xhha2"), SubResource("VoxelBlockyModelCube_5p3ou"), SubResource("VoxelBlockyModelCube_f7fg2"), SubResource("VoxelBlockyModelCube_ynjnm"), SubResource("VoxelBlockyModelCube_jfjxn"), SubResource("VoxelBlockyModelCube_vota0")])
+
+[sub_resource type="VoxelMesherBlocky" id="VoxelMesherBlocky_8riwb"]
+library = SubResource("VoxelBlockyLibrary_0djfs")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_70skc"]
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_bwb1c")
+texture_filter = 2
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ehhvi"]
+turbidity = 0.0
+energy_multiplier = 3.0
+
+[sub_resource type="Sky" id="Sky_3peo6"]
+sky_material = SubResource("PhysicalSkyMaterial_ehhvi")
+
+[sub_resource type="Environment" id="Environment_5u5h2"]
+background_mode = 2
+sky = SubResource("Sky_3peo6")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_lhnae")
+
+[node name="Player" parent="." instance=ExtResource("1_qjuvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.43945, 0)
+
+[node name="VoxelTerrain" type="VoxelTerrain" parent="."]
+generator = SubResource("VoxelGeneratorNoise2D_2v5sq")
+mesher = SubResource("VoxelMesherBlocky_8riwb")
+material_override = SubResource("StandardMaterial3D_70skc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5u5h2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+light_indirect_energy = 2.0
+light_volumetric_fog_energy = 0.0

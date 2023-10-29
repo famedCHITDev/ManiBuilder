@@ -1,0 +1,117 @@
+[gd_scene load_steps=13 format=3 uid="uid://dn2tjx02tywyx"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_1ss0e"]
+[ext_resource type="Texture2D" uid="uid://baitvrrus41e8" path="res://playerTextures/Mesh/Head.png" id="2_ej8mv"]
+[ext_resource type="Script" path="res://PlayerModel.gd" id="2_n1k5d"]
+[ext_resource type="PackedScene" uid="uid://c5e1bgeggxave" path="res://UI.tscn" id="3_8rard"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d1jta"]
+size = Vector3(0.6, 1.8, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ansf4"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tikkr"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rqyq8"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwohi"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iiohp"]
+albedo_texture = ExtResource("2_ej8mv")
+uv1_scale = Vector3(0.75, 0.65, 0.75)
+uv1_offset = Vector3(0, 0.335, 0)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ldous"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_008h3"]
+size = Vector3(2, 2, 2)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_1ss0e")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("BoxShape3D_d1jta")
+
+[node name="PlayerModel" type="Node3D" parent="."]
+transform = Transform3D(-8.74228e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.74228e-09, 0, 0, 0)
+script = ExtResource("2_n1k5d")
+
+[node name="UpperBodyHelper" type="Node3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75, 0)
+
+[node name="Torso" type="MeshInstance3D" parent="PlayerModel/UpperBodyHelper"]
+transform = Transform3D(0.625, 0, 7.81597e-14, 0, 1.875, 0, -3.90799e-14, 0, 1.25, 0, 1.875, 0)
+layers = 2
+mesh = SubResource("BoxMesh_ansf4")
+skeleton = NodePath("")
+
+[node name="LArmHelper" type="Node3D" parent="PlayerModel/UpperBodyHelper"]
+transform = Transform3D(1, 0, 2.84217e-14, 0, 1, 0, -2.84217e-14, 0, 1, 2.13163e-14, 3.125, 1.875)
+
+[node name="LArm" type="MeshInstance3D" parent="PlayerModel/UpperBodyHelper/LArmHelper"]
+transform = Transform3D(0.625, 0, 0, 0, 1.875, 0, 0, 0, 0.625, 0, -1.25, 0)
+layers = 2
+mesh = SubResource("BoxMesh_tikkr")
+
+[node name="RArmHelper" type="Node3D" parent="PlayerModel/UpperBodyHelper"]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -7.10543e-15, 3.125, -1.875)
+
+[node name="RArm" type="MeshInstance3D" parent="PlayerModel/UpperBodyHelper/RArmHelper"]
+transform = Transform3D(0.625, 0, 0, 0, 1.875, 0, 0, 0, 0.625, 0, -1.25, 0)
+layers = 2
+mesh = SubResource("BoxMesh_rqyq8")
+
+[node name="HeadHelper" type="Node3D" parent="PlayerModel/UpperBodyHelper"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -4.76837e-07, 3.75, 1.42109e-14)
+
+[node name="Head" type="MeshInstance3D" parent="PlayerModel/UpperBodyHelper/HeadHelper"]
+transform = Transform3D(1.25, 0, 1.42109e-14, 0, 1.25, 0, -1.42109e-14, 0, 1.25, 0, 1.25, 0)
+layers = 2
+mesh = SubResource("BoxMesh_pwohi")
+surface_material_override/0 = SubResource("StandardMaterial3D_iiohp")
+
+[node name="LLegHelper" type="Node3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 2.4869e-14, 0, 1, 0, -2.4869e-14, 0, 1, 3.55271e-15, 3.125, 0.625)
+
+[node name="LLeg" type="MeshInstance3D" parent="PlayerModel/LLegHelper"]
+transform = Transform3D(0.625, 0, 0, 0, 1.875, 0, 0, 0, 0.625, 0, -1.25, 0)
+layers = 2
+mesh = SubResource("BoxMesh_ldous")
+
+[node name="RLegHelper" type="Node3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, -3.55271e-15, 3.125, -0.625)
+
+[node name="RLeg" type="MeshInstance3D" parent="PlayerModel/RLegHelper"]
+transform = Transform3D(0.625, 0, 0, 0, 1.875, 0, 0, 0, 0.625, 0, -1.25, 0)
+layers = 2
+mesh = SubResource("BoxMesh_008h3")
+
+[node name="FPS" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67, 0)
+cull_mask = 1048573
+current = true
+
+[node name="VoxelViewer" type="VoxelViewer" parent="FPS"]
+
+[node name="TPSRotate" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67, 0)
+
+[node name="TPSB" type="Camera3D" parent="TPSRotate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="VoxelViewer" type="VoxelViewer" parent="TPSRotate/TPSB"]
+
+[node name="TPSF" type="Camera3D" parent="TPSRotate"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2)
+current = true
+
+[node name="VoxelViewer" type="VoxelViewer" parent="TPSRotate/TPSF"]
+
+[node name="UI" parent="." instance=ExtResource("3_8rard")]
